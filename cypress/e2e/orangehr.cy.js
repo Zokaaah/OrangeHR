@@ -8,9 +8,8 @@ describe('Acessar tela de login OrangeHR', () => {
     cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type(InvalidPassword)
     cy.get('.oxd-button').click()
     cy.get('.oxd-alert-content > .oxd-text').should('contain','Invalid credentials')
-
   })
-  it.only('login valido', () => {
+  it('login valido', () => {
     const username = Cypress.env('USER')
     const password = Cypress.env('password')
     const LinkAcesso = Cypress.env('LINK')
@@ -18,8 +17,22 @@ describe('Acessar tela de login OrangeHR', () => {
     cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type(username)
     cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type(password)
     cy.get('.oxd-button').click()
-
     cy.get('.oxd-topbar-header-breadcrumb > .oxd-text').should('contain', 'Dashboard')
 
+  })
+
+  it.only('Logout', () => {
+    const username = Cypress.env('USER')
+    const password = Cypress.env('password')
+    const LinkAcesso = Cypress.env('LINK')
+    cy.visit(LinkAcesso)
+    cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type(username)
+    cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type(password)
+    cy.get('.oxd-button').click()
+    cy.get('.oxd-topbar-header-breadcrumb > .oxd-text').should('contain', 'Dashboard')
+    cy.get('.oxd-userdropdown-tab').click()
+    cy.wait(2000)
+    cy.get(':nth-child(4) > .oxd-userdropdown-link').click()
+    cy.get('.oxd-text--h5').should('contain','Login')
   })
 })
